@@ -60,14 +60,6 @@ int main()
 	executionTasks = malloc(hyperPeriod * sizeof(taskExecution));
 	printf("Value of executionTasks:  %p\n", executionTasks );
 
-	// Define the pointer to the object gnuplot
-//	objectToPlot = malloc(hyperPeriod * sizeof(char*));
-//	for (int i = 0; i < hyperPeriod; i++)
-//	{
-//    	objectToPlot[i] = malloc((MAX_STRING_SIZE+1) * sizeof(char));
-//	}
-
-	
 	// The body of the scheduler
 	while (i < hyperPeriod)
 	{
@@ -77,19 +69,12 @@ int main()
 		i++;
 	}
 
-/*
-	for (i = 0; i < hyperPeriod; i++)
-	{
-		printf("The task_id of the task is %d, its color is %s\n", executionTasks->idOfTask, executionTasks->color);
-		executionTasks++;
-	}
-*/
 //	*objectToPlot = BuildObject(executionTasks, hyperPeriod);
 	numOfObject = BuildObject(executionTasks, hyperPeriod);
 
 //	PlotSchedule(executionTasks, hyperPeriod);
 
-	Plot(t, tasksNumber, numOfObject);
+	Plot(t, tasksNumber, numOfObject, hyperPeriod);
 //	free(objectToPlot);
 
 	free(t);	

@@ -15,7 +15,7 @@
 char objectArray[256][200];
 
 // declare the ytics string to give to gnuplot
-char yticsString[1024] = "set ytics(\'Idle\' 0, ";
+char yticsString[1024] = "set ytics(\'CPU Idle\' 0, ";
 
 // declare the array of color used for plotting with gnuplot
 char* colors[] = {"'dark-grey'", "'red'", "'web-green'", "'web-blue'", "'dark-magenta'", "'dark-cyan'", "'dark-orange'", "dark-yellow", \
@@ -32,7 +32,12 @@ char* colors[] = {"'dark-grey'", "'red'", "'web-green'", "'web-blue'", "'dark-ma
 "gray100"};
 
 
+/// <summary>
 /// Store tasks parameters - Task id, Computation time and Period
+/// </summary>
+/// <task data structure="t1"></param>
+/// <the lenght of the tasks set="n"></param>
+/// <returns></returns>
 void StoreTasks(task *t1, int n)
 {
 	int i = 0;
@@ -71,8 +76,12 @@ void StoreTasks(task *t1, int n)
 }
 
 
-
+/// <summary>
 /// Test the schedulability of the tasks set
+/// </summary>
+/// <task data structure="t1"></param>
+/// <the lenght of the tasks set="n"></param>
+/// <returns></returns>
 void TestSchedulability(task *t1, int n) 
 {
 	double utilizationOfCpu, leastUpperBound = 0;
@@ -86,7 +95,12 @@ void TestSchedulability(task *t1, int n)
 }
 
 
+/// <summary>
 /// Calculate the hyper period for the tasks set
+/// </summary>
+/// <task data structure="t1"></param>
+/// <the lenght of the tasks set="n"></param>
+/// <returns></returns>
 int CalculateHyperPeriod(task *t1, int n)
 {
 	int i = 0, hyperPeriod, buffer[10];
@@ -103,10 +117,8 @@ int CalculateHyperPeriod(task *t1, int n)
 }
 
 
-/// Calculate the least common multiple
-
 /// <summary>
-/// 
+/// Calculate the least common multiple
 /// </summary>
 /// <a number="a"></param>
 /// <the lenght of the tasks set="n"></param>
@@ -122,8 +134,6 @@ int CalculateLCM(int *a, int n)
 }
 
 
-
-
 /// <summary>
 /// Calculate the greatest common divisor
 /// </summary>
@@ -137,7 +147,6 @@ int CalculateGCD(int a, int b)
 	else
 		return CalculateGCD(b, a % b);
 }
-
 
 
 /// <summary>
@@ -160,7 +169,6 @@ double CalculateCpuUtilization(task *t1, int n)
 }
 
 
-
 /// <summary>
 /// Calculate the Least upper bound
 /// </summary>
@@ -168,10 +176,8 @@ double CalculateCpuUtilization(task *t1, int n)
 /// <returns></returns>
 double CalculateLeastUpperBound(int n)
 {		
-
 	return (double)(n) * ((pow(2.0, 1 / (double)(n))) - 1);
 }
-
 
 
 /// <summary>
@@ -204,40 +210,34 @@ int CalculateThePriorTask(task *t1, int n, int hyperPeriod)
 }
  
 
-
 /// <summary>
-/// Run the task with the prior id in the tasks set given as parameter
+/// Run the task with the prior id in the tasks set given as parameter and constract the execution task data structre
 /// </summary>
 /// <task data structure="t1"></param>
 /// <the instance unit time="time"></param>
 /// <the id of the prior task to execute="priorTaskID"></param>
-/// <table of execution of the schedule="t2"></param>
-
-
-//void RunPriorTask(task *t1, int time, int priorTaskID)
+/// <the execution task data structure of the schedule="t2"></param>
 void RunPriorTask(task* t1, int time, int priorTaskID, taskExecution* t2)
 {
 	t2=t2+time;
 	if (priorTaskID == -1)
 	{
-		printf("in time %d-%d, the CPU is Idle\n", time, time+1);		// if -1 returned so no task is prior for running the CPU
+		printf("in time %d-%d, the CPU is Idle\n", time, time+1);		
 		t2->color = "'black'";
 		t2->indent = 0;
 	}
 	else
 	{
-		while (t1->T[id] != priorTaskID)				// pointing to the id of the prior task to run on the CPU
+		while (t1->T[id] != priorTaskID)				
 		{
 			t1++;
 		}
-		printf("in time %d-%d, task %d is running\n", time, time + 1, priorTaskID);	// the prior task is running on the CPU
+		printf("in time %d-%d, task %d is running\n", time, time + 1, priorTaskID);
 		t2->color = t1->color;
 		t2->indent = t1->T[indentation];	
 		t1->T[remainingComputation]--;		
 	}
-	//t2[time] = priorTaskID;
-	t2->idOfTask = priorTaskID;
-	
+	t2->idOfTask = priorTaskID;	
 }
 
 
@@ -276,44 +276,11 @@ void StoreData(task *t1, int n)
 	}
 }
 
-
 /// <summary>
-/// Plot with the use of a pipe the schedule of the CPU
+///  Build object that will be plot using gnuplot
 /// </summary>
-/// <table of execution of the schedule="t2"></param>
-/// <the lenght of the hyperperiod="n"></param>
-/*void PlotSchedule(int *t2, int n)
-{
-	gnuplot_ctrl *h ;
-	double d[n];
-
-	h = gnuplot_init();
-	gnuplot_setstyle(h, "boxes") ;
-	for (int i = 0; i < n; i++)
-	{
-        d[i] = (double)(t2[i]) ;
-	//	printf("%lf\n", d[i]);
-	}
-	gnuplot_cmd(h, "set ytics(\'Idle\' -1.0, \'Task 1\' 1.0, \'Task 2\' 2.0, \'Task 3\' 3.0)") ;
-//	set ytics('Processor1' 1.5,'Processor2' 0.5)
-	gnuplot_plot_x(h,d,n,"Schedule of the CPU");
-	sleep(30) ;
-	//gnuplot_cmd(h, "pause mouse");
-	gnuplot_close(h) ;		
-}
-*/
-
-/*
-void BuildYaxis(int n)
-{
-	for (int i=0; i<n; i++)
-	{
-
-	}
-
-}
-s
-*/
+/// <execution task data structure="t2"></param>
+/// <the hyper period of the tasks set"hyperPeriod"></param>
 int BuildObject(taskExecution *t2, int hyperPeriod)
 {
 	int numberOfObject=0;
@@ -333,8 +300,7 @@ int BuildObject(taskExecution *t2, int hyperPeriod)
 
 			numberOfObject++;
 			object++;
-			start = i;
-			
+			start = i;		
 		}
 
 		end++;
@@ -357,7 +323,7 @@ int BuildObject(taskExecution *t2, int hyperPeriod)
 }
 
 
-void Plot(task *t1, int n,int lenghtOfObjects)
+void Plot(task *t1, int n,int lenghtOfObjects, int hyperPeriod)
 {
 	char buffer[32]= "";	
 	gnuplot_ctrl *h ;
@@ -382,18 +348,20 @@ void Plot(task *t1, int n,int lenghtOfObjects)
 		t1++;
 	}
 
-	printf("%s\n",yticsString);
-
 	gnuplot_cmd(h, "%s",yticsString);
 	gnuplot_cmd(h, "unset key");
-	gnuplot_cmd(h, "set xrange [0:20]");
-	gnuplot_cmd(h, "set yrange [0:10]");
+	gnuplot_cmd(h, "set xrange [0:%d]",hyperPeriod);
+	gnuplot_cmd(h, "set yrange [0:%d]",n+2);
 	gnuplot_cmd(h, "set xlabel \'time t\'");
 
 	for (int i=0; i<lenghtOfObjects+1; i++)
 	{
 		gnuplot_cmd(h, "%s",objectArray[i]);
 	}
+
+	gnuplot_cmd(h, "plot 1 w l lt 2 lc rgb \'red\'");
+	sleep(1) ;
+	gnuplot_close(h) ;
 
 /*	
 	gnuplot_cmd(h, "set object 1 rectangle from 2,1 to 7, 1.7 fc rgb \'gold\'");
@@ -413,10 +381,6 @@ void Plot(task *t1, int n,int lenghtOfObjects)
 	gnuplot_cmd(h, "set label 5 \'t1\' at 10,0.05");
 
 */
-
-	gnuplot_cmd(h, "plot 1 w l lt 2 lc rgb \'red\'");
-	sleep(1) ;
-	gnuplot_close(h) ;
 
 }
 
