@@ -219,7 +219,7 @@ int CalculateThePriorTask(task *t1, int n, int hyperPeriod)
 /// <the execution task data structure of the schedule="t2"></param>
 void RunPriorTask(task* t1, int time, int priorTaskID, taskExecution* t2)
 {
-	t2=t2+time;
+	t2+=time;
 	if (priorTaskID == -1)
 	{
 		printf("in time %d-%d, the CPU is Idle\n", time, time+1);		
@@ -246,13 +246,17 @@ void RunPriorTask(task* t1, int time, int priorTaskID, taskExecution* t2)
 /// </summary>
 /// <task data structure="t1"></param>
 /// <the lenght of the tasks set="n"></param>
-void UpdateNextPeriodTime(task *t1, int n)
+void UpdateNextPeriodTime(task *t1, int n, int time)
 {
 	for (int i = 0; i < n; i++)
 	{
 		t1->T[nextPeriod]--;
 		if (t1->T[nextPeriod] == 0)
 		{
+			if(t1->T[remainingComputation] > 0)
+			{
+				printf("There is a deadline mise for the task %d in time t = %d\n",t1->T[id],time+1);
+			}
 			t1->T[nextPeriod] = t1->T[period];
 			t1->T[remainingComputation] = t1->T[computation];
 		}
@@ -315,10 +319,6 @@ int BuildObject(taskExecution *t2, int hyperPeriod)
 		}
 	}
 
-	for (int i=0; i<numberOfObject+1; i++)
-	{
-		printf("%s \n",objectArray[i]);
-	}
 	return numberOfObject;
 }
 

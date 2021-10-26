@@ -65,7 +65,7 @@ double CalculateLeastUpperBound(int n);										//Calculate the Least upper bou
 double CalculateCpuUtilization(task *t1, int n);							//Calculate the CPU Utilization 
 int CalculateThePriorTask(task *t1, int n, int hyperPeriod);				//Give the id of the instant prior task in the tasks set
 void RunPriorTask(task* t1, int time, int priorTaskID, taskExecution* t2);	//Run the prior task id
-void UpdateNextPeriodTime(task *t1, int n);									//Update the next time remaining to start of period for each task in tasks set
+void UpdateNextPeriodTime(task *t1, int n, int time);						//Update the next time remaining to start of period for each task in tasks set
 void StoreData(task* t1, int n);											//Store data for task structure
 void PlotSchedule(int *t2, int n);											//Plot with the use of a pipe the schedule of the CPU
 void Plot(task *t1, int n,int lenghtOfObjects, int hyperPeriod);

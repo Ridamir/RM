@@ -65,7 +65,7 @@ int main()
 	{
 		idOfPriorTask = CalculateThePriorTask(t, tasksNumber, hyperPeriod);
 		RunPriorTask(t, i, idOfPriorTask, executionTasks);
-		UpdateNextPeriodTime(t, tasksNumber);
+		UpdateNextPeriodTime(t, tasksNumber,i);
 		i++;
 	}
 
@@ -78,13 +78,8 @@ int main()
 //	free(objectToPlot);
 
 	free(t);	
-	printf("number of object is %d \n",numOfObject);
-
-
-//	printf("objectToPlot has been free");
-
 	free(executionTasks);
-	printf("executionTasks has been free\n");
+
 
 
 
