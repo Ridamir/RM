@@ -12,7 +12,7 @@
 
 
 
-char* colors[] = {"dark-grey", "red", "web-green", "web-blue", "dark-magenta", "dark-cyan", "dark-orange", "dark-yellow", \
+char* colors[] = {"'dark-grey'", "'red'", "'web-green'", "'web-blue'", "'dark-magenta'", "'dark-cyan'", "'dark-orange'", "dark-yellow", \
 "royalblue", "goldenrod", "dark-spring-green", "purple", "steelblue", "dark-red", "dark-chartreuse", "orchid", "aquamarine", "brown", \
 "yellow", "turquoise", "grey0", "grey10", "grey20", "grey30", "grey40", "grey50", "grey60", "grey70", \
 "grey", "grey80", "grey90", "grey100", "light-red", "light-green", "light-blue", "light-magenta", "light-cyan", "light-goldenrod", \
@@ -300,11 +300,13 @@ void BuildYaxis(int n)
 	}
 
 }
+#define NUMBER_OF_OBJECT 		256
+#define MAX_OBJECT_SIZE 		200
 
 */
-char* BuildObject(taskExecution *t2, int hyperPeriod)
+void BuildObject(taskExecution *t2, int hyperPeriod)
 {
-	char *objectArray[hyperPeriod];
+	char objectArray[256][200];
 	int j=0;
 	int object = 1;
 	int start = 0;
@@ -318,6 +320,8 @@ char* BuildObject(taskExecution *t2, int hyperPeriod)
 		{
 			end = i;
 			sprintf(objectArray[j], "set object %d rectangle from %d,0 to %d, 1.7 fc rgb %s", object,start,end,color);
+			printf("set object %d rectangle from %d,0 to %d, 1.7 fc rgb %s\n", object,start,end,color);
+
 			j++;
 			object++;
 			start = i;
@@ -332,9 +336,15 @@ char* BuildObject(taskExecution *t2, int hyperPeriod)
 		if (i == hyperPeriod-1) 
 		{
 			sprintf(objectArray[j], "set object %d rectangle from %d,0 to %d, 1.7 fc rgb %s", object,start,end,color);
+			printf("set object %d rectangle from %d,0 to %d, 1.7 fc rgb %s\n", object,start,end,color);
 		}
 	}
-	return *objectArray;
+
+	for (int i=0; i<j; i++)
+	{
+		printf("The object number %d is %s \n",i,objectArray[i]);
+	}
+//	return *objectArray;
 }
 
 

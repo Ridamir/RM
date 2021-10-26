@@ -13,7 +13,7 @@ int main()
 // --------- Declaration Area ---------
 
 	//  declare the pointer to the tasks set structure
-	task *t;
+	task* t;
 	
 	// declare the lenght of the tasks set
 	int tasksNumber = 0;
@@ -22,7 +22,7 @@ int main()
 	int hyperPeriod = 0; 
 
 	// declare the pointer to the execution structure
-	taskExecution *executionTasks = NULL;
+	taskExecution* executionTasks = NULL;
 		
 	// declare an iterator for the lenght of hyperPeriod
 	int i = 0;
@@ -31,7 +31,7 @@ int main()
 	int idOfPriorTask = 0;
 
 	// declare the pointer to the object gnuplot constracted
-	char **objectToPlot;
+	char** objectToPlot;		// this is not to use
 
 // --------- Body code ---------
 		
@@ -45,19 +45,23 @@ int main()
 	
 
 	t = malloc(tasksNumber * sizeof(task)) ;	
+	printf("Value of t:  %p\n", t );
+
+
 	StoreTasks(t, tasksNumber);
 	TestSchedulability(t, tasksNumber);
 	hyperPeriod = CalculateHyperPeriod(t, tasksNumber);
 
 	// Define the pointer to the table of execution for the tasks set
 	executionTasks = malloc(hyperPeriod * sizeof(taskExecution));
+	printf("Value of executionTasks:  %p\n", executionTasks );
 
 	// Define the pointer to the object gnuplot
-	objectToPlot = malloc(hyperPeriod * sizeof(char*));
-	for (int i = 0; i < hyperPeriod; i++)
-	{
-    	objectToPlot[i] = malloc((MAX_STRING_SIZE+1) * sizeof(char));
-	}
+//	objectToPlot = malloc(hyperPeriod * sizeof(char*));
+//	for (int i = 0; i < hyperPeriod; i++)
+//	{
+//    	objectToPlot[i] = malloc((MAX_STRING_SIZE+1) * sizeof(char));
+//	}
 
 	
 	// The body of the scheduler
@@ -69,20 +73,30 @@ int main()
 		i++;
 	}
 
-
+/*
 	for (i = 0; i < hyperPeriod; i++)
 	{
 		printf("The task_id of the task is %d, its color is %s\n", executionTasks->idOfTask, executionTasks->color);
 		executionTasks++;
 	}
-
-	*objectToPlot = BuildObject(executionTasks, hyperPeriod);
+*/
+//	*objectToPlot = BuildObject(executionTasks, hyperPeriod);
+	BuildObject(executionTasks, hyperPeriod);
 
 //	PlotSchedule(executionTasks, hyperPeriod);
 // 	Plot();
+//	free(objectToPlot);
+
 	free(t);	
+	printf("t has been free\n");
+
+
+//	printf("objectToPlot has been free");
+
 	free(executionTasks);
-	free(objectToPlot);
-	
+	printf("executionTasks has been free\n");
+
+
+
 	return 0;
 }
