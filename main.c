@@ -88,7 +88,8 @@ int main()
 	numOfObject = BuildObject(executionTasks, hyperPeriod);
 
 //	PlotSchedule(executionTasks, hyperPeriod);
-// 	Plot();
+
+	Plot(t, tasksNumber, numOfObject);
 //	free(objectToPlot);
 
 	free(t);	

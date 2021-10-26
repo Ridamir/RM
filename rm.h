@@ -68,5 +68,5 @@ void RunPriorTask(task* t1, int time, int priorTaskID, taskExecution* t2);	//Run
 void UpdateNextPeriodTime(task *t1, int n);									//Update the next time remaining to start of period for each task in tasks set
 void StoreData(task* t1, int n);											//Store data for task structure
 void PlotSchedule(int *t2, int n);											//Plot with the use of a pipe the schedule of the CPU
-void Plot();
+void Plot(task *t1, int n,int lenghtOfObjects);
 int BuildObject(taskExecution *t2, int hyperPeriod);

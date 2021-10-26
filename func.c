@@ -14,6 +14,9 @@
 // declare the objects array for plotting with gnuplot
 char objectArray[256][200];
 
+// declare the ytics string to give to gnuplot
+char yticsString[1024] = "set ytics(\'Idle\' 0, ";
+
 // declare the array of color used for plotting with gnuplot
 char* colors[] = {"'dark-grey'", "'red'", "'web-green'", "'web-blue'", "'dark-magenta'", "'dark-cyan'", "'dark-orange'", "dark-yellow", \
 "royalblue", "goldenrod", "dark-spring-green", "purple", "steelblue", "dark-red", "dark-chartreuse", "orchid", "aquamarine", "brown", \
@@ -60,7 +63,7 @@ void StoreTasks(task *t1, int n)
 		t1->color = colors[i];
 
 		// assign the indentation of the task used for plotting its schedule
-		t1->T[indentation] = i+1;
+		t1->T[indentation] = i+2;
 
 		t1++;
 		i++;
@@ -326,7 +329,7 @@ int BuildObject(taskExecution *t2, int hyperPeriod)
 		if (t2->idOfTask != lastValue && lastValue != 0)
 		{
 			end = i;
-			sprintf(objectArray[numberOfObject], "set object %d rectangle from %d,%d to %d, 1.7 fc rgb %s", object,start,yIndentation,end,color);
+			sprintf(objectArray[numberOfObject], "set object %d rectangle from %d,%d to %d, 1 fc rgb %s", object,start,yIndentation,end,color);
 
 			numberOfObject++;
 			object++;
@@ -342,7 +345,7 @@ int BuildObject(taskExecution *t2, int hyperPeriod)
 		
 		if (i == hyperPeriod-1) 
 		{
-			sprintf(objectArray[numberOfObject], "set object %d rectangle from %d,%d to %d, 1.7 fc rgb %s", object,start,yIndentation,end,color);
+			sprintf(objectArray[numberOfObject], "set object %d rectangle from %d,%d to %d, 1 fc rgb %s", object,start,yIndentation,end,color);
 		}
 	}
 
@@ -354,24 +357,45 @@ int BuildObject(taskExecution *t2, int hyperPeriod)
 }
 
 
-/*
-void Plot()
+void Plot(task *t1, int n,int lenghtOfObjects)
 {
+	char buffer[32]= "";	
 	gnuplot_ctrl *h ;
 
 	h = gnuplot_init();
 	gnuplot_cmd(h, "set term pngcairo dashed size %d,%d",800,400) ;
-	gnuplot_cmd(h, "set output \'schedule.png\'");
+	gnuplot_cmd(h, "set output \'taskschedule.png\'");
 	gnuplot_cmd(h, "set style fill solid");
 	gnuplot_cmd(h, "unset ytics");
 
+	for (int i=0; i<n; i++)
+	{
+		if (i!=n-1)
+		{
+			sprintf(buffer, "\'Task %d\' %d, ", t1->T[id],i+2);
+		}
+		else 
+		{
+			sprintf(buffer, "\'Task %d\' %d)", t1->T[id],i+2);
+		}
+		strcat(yticsString, buffer);		
+		t1++;
+	}
 
-	gnuplot_cmd(h, "set ytics(\'Processor1\' 1.5,\'Processor2\' 0.5)");
+	printf("%s\n",yticsString);
 
+	gnuplot_cmd(h, "%s",yticsString);
 	gnuplot_cmd(h, "unset key");
-	gnuplot_cmd(h, "set xrange [-1:20]");
+	gnuplot_cmd(h, "set xrange [0:20]");
 	gnuplot_cmd(h, "set yrange [0:10]");
-	gnuplot_cmd(h, "set xlabel \'t\'");
+	gnuplot_cmd(h, "set xlabel \'time t\'");
+
+	for (int i=0; i<lenghtOfObjects+1; i++)
+	{
+		gnuplot_cmd(h, "%s",objectArray[i]);
+	}
+
+/*	
 	gnuplot_cmd(h, "set object 1 rectangle from 2,1 to 7, 1.7 fc rgb \'gold\'");
 	gnuplot_cmd(h, "set object 2 rectangle from 7,1 to 12,1.7 fc rgb \'light-green\'");
 	gnuplot_cmd(h, "set object 3 rectangle from 12,1 to 17,1.7 fc rgb \'light-blue\'");
@@ -387,10 +411,12 @@ void Plot()
 	gnuplot_cmd(h, "set label 3 \'t2\' at 12,1.05");
 	gnuplot_cmd(h, "set label 4 \'t5\' at 0,0.05");
 	gnuplot_cmd(h, "set label 5 \'t1\' at 10,0.05");
+
+*/
+
 	gnuplot_cmd(h, "plot 1 w l lt 2 lc rgb \'red\'");
-	sleep(30) ;
+	sleep(1) ;
 	gnuplot_close(h) ;
 
 }
 
-*/
