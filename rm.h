@@ -14,6 +14,7 @@
 #define period	 				2
 #define remainingComputation	3
 #define nextPeriod				4
+#define indentation				5
 
 #define NUMBER_OF_STRING 		4
 #define MAX_STRING_SIZE 		25
@@ -24,7 +25,7 @@
 //stucture of a task
 typedef struct
 {
-	int T[5];
+	int T[6];
 /*
 	External parameters		
 		
@@ -36,6 +37,7 @@ typedef struct
 
 		T[3] == T[remainingComputation]  			(Computation time for the time present, internal use only)
 		T[4] == T[nextPeriod]						(Remaining time for the next period for the time present, internal use only)
+		T[5] == T[indentation]						(indentation used in ploting the schedule of a task)
 */
 	char *color;
 
@@ -44,6 +46,7 @@ typedef struct
 typedef struct
 {
 	int idOfTask;			//						(task id)
+	int indent;				//						(task indentation)
 	char *color;			//						(color)
 
 }taskExecution;
@@ -66,4 +69,4 @@ void UpdateNextPeriodTime(task *t1, int n);									//Update the next time remai
 void StoreData(task* t1, int n);											//Store data for task structure
 void PlotSchedule(int *t2, int n);											//Plot with the use of a pipe the schedule of the CPU
 void Plot();
-void BuildObject(taskExecution *t2, int hyperPeriod);
+int BuildObject(taskExecution *t2, int hyperPeriod);

@@ -33,6 +33,10 @@ int main()
 	// declare the pointer to the object gnuplot constracted
 	char** objectToPlot;		// this is not to use
 
+	// declare the number of object for plotting with gnuplot
+	int numOfObject;
+
+
 // --------- Body code ---------
 		
 	printf("Enter the lenght of the tasks set\n");
@@ -81,14 +85,14 @@ int main()
 	}
 */
 //	*objectToPlot = BuildObject(executionTasks, hyperPeriod);
-	BuildObject(executionTasks, hyperPeriod);
+	numOfObject = BuildObject(executionTasks, hyperPeriod);
 
 //	PlotSchedule(executionTasks, hyperPeriod);
 // 	Plot();
 //	free(objectToPlot);
 
 	free(t);	
-	printf("t has been free\n");
+	printf("number of object is %d \n",numOfObject);
 
 
 //	printf("objectToPlot has been free");

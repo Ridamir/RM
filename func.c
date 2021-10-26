@@ -11,7 +11,10 @@
 #include "gnuplot_i.h"
 
 
+// declare the objects array for plotting with gnuplot
+char objectArray[256][200];
 
+// declare the array of color used for plotting with gnuplot
 char* colors[] = {"'dark-grey'", "'red'", "'web-green'", "'web-blue'", "'dark-magenta'", "'dark-cyan'", "'dark-orange'", "dark-yellow", \
 "royalblue", "goldenrod", "dark-spring-green", "purple", "steelblue", "dark-red", "dark-chartreuse", "orchid", "aquamarine", "brown", \
 "yellow", "turquoise", "grey0", "grey10", "grey20", "grey30", "grey40", "grey50", "grey60", "grey70", \
@@ -55,7 +58,10 @@ void StoreTasks(task *t1, int n)
 		
 		// assign the color of the task
 		t1->color = colors[i];
-		
+
+		// assign the indentation of the task used for plotting its schedule
+		t1->T[indentation] = i+1;
+
 		t1++;
 		i++;
 	}
@@ -212,7 +218,8 @@ void RunPriorTask(task* t1, int time, int priorTaskID, taskExecution* t2)
 	if (priorTaskID == -1)
 	{
 		printf("in time %d-%d, the CPU is Idle\n", time, time+1);		// if -1 returned so no task is prior for running the CPU
-		t2->color = "black";
+		t2->color = "'black'";
+		t2->indent = 0;
 	}
 	else
 	{
@@ -222,6 +229,7 @@ void RunPriorTask(task* t1, int time, int priorTaskID, taskExecution* t2)
 		}
 		printf("in time %d-%d, task %d is running\n", time, time + 1, priorTaskID);	// the prior task is running on the CPU
 		t2->color = t1->color;
+		t2->indent = t1->T[indentation];	
 		t1->T[remainingComputation]--;		
 	}
 	//t2[time] = priorTaskID;
@@ -290,8 +298,9 @@ void StoreData(task *t1, int n)
 	//gnuplot_cmd(h, "pause mouse");
 	gnuplot_close(h) ;		
 }
+*/
 
-
+/*
 void BuildYaxis(int n)
 {
 	for (int i=0; i<n; i++)
@@ -300,18 +309,16 @@ void BuildYaxis(int n)
 	}
 
 }
-#define NUMBER_OF_OBJECT 		256
-#define MAX_OBJECT_SIZE 		200
-
+s
 */
-void BuildObject(taskExecution *t2, int hyperPeriod)
+int BuildObject(taskExecution *t2, int hyperPeriod)
 {
-	char objectArray[256][200];
-	int j=0;
+	int numberOfObject=0;
 	int object = 1;
 	int start = 0;
 	int end = 0;
 	int lastValue = 0;
+	int yIndentation = 0;
 	char *color = "";
 
 	for (int i=0; i<hyperPeriod; i++)
@@ -319,10 +326,9 @@ void BuildObject(taskExecution *t2, int hyperPeriod)
 		if (t2->idOfTask != lastValue && lastValue != 0)
 		{
 			end = i;
-			sprintf(objectArray[j], "set object %d rectangle from %d,0 to %d, 1.7 fc rgb %s", object,start,end,color);
-			printf("set object %d rectangle from %d,0 to %d, 1.7 fc rgb %s\n", object,start,end,color);
+			sprintf(objectArray[numberOfObject], "set object %d rectangle from %d,%d to %d, 1.7 fc rgb %s", object,start,yIndentation,end,color);
 
-			j++;
+			numberOfObject++;
 			object++;
 			start = i;
 			
@@ -331,20 +337,20 @@ void BuildObject(taskExecution *t2, int hyperPeriod)
 		end++;
 		lastValue = t2->idOfTask ;
 		color = t2->color ;
+		yIndentation = t2->indent;
 		t2++;
 		
 		if (i == hyperPeriod-1) 
 		{
-			sprintf(objectArray[j], "set object %d rectangle from %d,0 to %d, 1.7 fc rgb %s", object,start,end,color);
-			printf("set object %d rectangle from %d,0 to %d, 1.7 fc rgb %s\n", object,start,end,color);
+			sprintf(objectArray[numberOfObject], "set object %d rectangle from %d,%d to %d, 1.7 fc rgb %s", object,start,yIndentation,end,color);
 		}
 	}
 
-	for (int i=0; i<j; i++)
+	for (int i=0; i<numberOfObject+1; i++)
 	{
-		printf("The object number %d is %s \n",i,objectArray[i]);
+		printf("%s \n",objectArray[i]);
 	}
-//	return *objectArray;
+	return numberOfObject;
 }
 
 
