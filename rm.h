@@ -15,7 +15,7 @@
 #define nextPeriod				4
 
 #define NUMBER_OF_STRING 		4
-#define MAX_STRING_SIZE 		40
+#define MAX_STRING_SIZE 		20
 
 //#define EXIT_FAILURE /*implementation defined*/
 //#define EXIT_SUCCESS /*implementation defined*/
@@ -65,3 +65,4 @@ void UpdateNextPeriodTime(task *t1, int n);									//Update the next time remai
 void StoreData(task* t1, int n);											//Store data for task structure
 void PlotSchedule(int *t2, int n);											//Plot with the use of a pipe the schedule of the CPU
 void Plot();
+char* BuildObject(taskExecution *t2, int hyperPeriod);

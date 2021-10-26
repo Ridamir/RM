@@ -30,6 +30,9 @@ int main()
 	// declare the id of the prior task
 	int idOfPriorTask = 0;
 
+	// declare the pointer to the object gnuplot constracted
+	char **objectToPlot;
+
 // --------- Body code ---------
 		
 	printf("Enter the lenght of the tasks set\n");
@@ -48,6 +51,14 @@ int main()
 
 	// Define the pointer to the table of execution for the tasks set
 	executionTasks = malloc(hyperPeriod * sizeof(taskExecution));
+
+	// Define the pointer to the object gnuplot
+	objectToPlot = malloc(hyperPeriod * sizeof(char*));
+	for (int i = 0; i < hyperPeriod; i++)
+	{
+    	objectToPlot[i] = malloc((MAX_STRING_SIZE+1) * sizeof(char));
+	}
+
 	
 	// The body of the scheduler
 	while (i < hyperPeriod)
@@ -65,8 +76,13 @@ int main()
 		executionTasks++;
 	}
 
+	*objectToPlot = BuildObject(executionTasks, hyperPeriod);
+
 //	PlotSchedule(executionTasks, hyperPeriod);
 // 	Plot();
 	free(t);	
+	free(executionTasks);
+	free(objectToPlot);
+	
 	return 0;
 }

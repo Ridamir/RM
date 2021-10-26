@@ -301,42 +301,44 @@ void BuildYaxis(int n)
 
 }
 
-
-char[] BuildObject(int *t2, int hyperPeriod)
+*/
+char* BuildObject(taskExecution *t2, int hyperPeriod)
 {
-	char objectArray[hyperPeriod][];
-//	int j=0;
+	char *objectArray[hyperPeriod];
+	int j=0;
 	int object = 1;
 	int start = 0;
 	int end = 0;
 	int lastValue = 0;
-	char color[] = "";
+	char *color = "";
 
 	for (int i=0; i<hyperPeriod; i++)
 	{
-		if (t2->T[id] != lastValue && lastValue != 0)
+		if (t2->idOfTask != lastValue && lastValue != 0)
 		{
 			end = i;
-			sprintf(objectPlot[j], "set object %d rectangle from %d,0 to %d, 1.7 fc rgb %s", object,start,end,color);
-		//	j++;
+			sprintf(objectArray[j], "set object %d rectangle from %d,0 to %d, 1.7 fc rgb %s", object,start,end,color);
+			j++;
 			object++;
 			start = i;
 			
 		}
 
 		end++;
-		lastValue = t2->T[id];
-		color = t2->T[color];
+		lastValue = t2->idOfTask ;
+		color = t2->color ;
 		t2++;
 		
 		if (i == hyperPeriod-1) 
 		{
-			sprintf(objectPlot[j], "set object %d rectangle from %d,0 to %d, 1.7 fc rgb %s", object,start,end,color);
+			sprintf(objectArray[j], "set object %d rectangle from %d,0 to %d, 1.7 fc rgb %s", object,start,end,color);
 		}
 	}
-	return objectPlot;
+	return *objectArray;
 }
 
+
+/*
 void Plot()
 {
 	gnuplot_ctrl *h ;
