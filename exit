@@ -1,0 +1,41 @@
+[33mcommit c86cc89af1b85fffcf7404e4a94c7a5c51d57c3b[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: ridamir <amirmohammedrida@gmail.com>
+Date:   Wed Oct 27 00:57:41 2021 +0200
+
+    7th release -- add deadline miss
+
+[33mcommit 46e6cde29e9d5df198352bba1dcf81284bffecc3[m
+Author: ridamir <amirmohammedrida@gmail.com>
+Date:   Wed Oct 27 00:32:31 2021 +0200
+
+    6th release - a clean beta version
+
+[33mcommit 2dca9eedec6c688488fc5d2a049892d5362cbfd0[m
+Author: ridamir <amirmohammedrida@gmail.com>
+Date:   Tue Oct 26 23:57:38 2021 +0200
+
+    5th release - The first schedule plot
+
+[33mcommit 74aea37cd32b6fcf847e5533f5b56610f6b4798a[m
+Author: ridamir <amirmohammedrida@gmail.com>
+Date:   Tue Oct 26 23:00:22 2021 +0200
+
+    4th release -make objectArray global variable
+
+[33mcommit 9e538c137f670303e6a67ade0a1f1261097d8deb[m
+Author: ridamir <amirmohammedrida@gmail.com>
+Date:   Tue Oct 26 17:44:22 2021 +0200
+
+    third release bug corrected
+
+[33mcommit 5bc6f7f729d8a1a0b6063906bb2472a02186a3a7[m
+Author: ridamir <amirmohammedrida@gmail.com>
+Date:   Tue Oct 26 16:09:57 2021 +0200
+
+    second release -- need bug fix
+
+[33mcommit 1e2d932a6cb83035886105ab2d17b6edd1f7f0f7[m
+Author: ridamir <amirmohammedrida@gmail.com>
+Date:   Tue Oct 26 15:01:40 2021 +0200
+
+    first release

@@ -15,9 +15,12 @@
 #define remainingComputation	3
 #define nextPeriod				4
 #define indentation				5
+#define readyTime				6
+#define runningTime				7
+#define averageResponse			8
 
-#define NUMBER_OF_STRING 		4
-#define MAX_STRING_SIZE 		25
+//#define NUMBER_OF_STRING 		4
+//#define MAX_STRING_SIZE 		25
 
 //#define EXIT_FAILURE /*implementation defined*/
 //#define EXIT_SUCCESS /*implementation defined*/
@@ -25,7 +28,7 @@
 //stucture of a task
 typedef struct
 {
-	int T[6];
+	int T[9];
 /*
 	External parameters		
 		
@@ -38,6 +41,9 @@ typedef struct
 		T[3] == T[remainingComputation]  			(Computation time for the time present, internal use only)
 		T[4] == T[nextPeriod]						(Remaining time for the next period for the time present, internal use only)
 		T[5] == T[indentation]						(indentation used in ploting the schedule of a task)
+		T[6] == T[readyTime]  						(for each period time, when the task is released)
+		T[7] == T[runningTime]						(for each period time, when the task is run for the first time)
+		T[8] == T[averageResponse]					(the average response for all the hyperperiod)
 */
 	char *color;
 
@@ -67,6 +73,7 @@ int CalculateThePriorTask(task *t1, int n, int hyperPeriod);				//Give the id of
 void RunPriorTask(task* t1, int time, int priorTaskID, taskExecution* t2);	//Run the prior task id
 void UpdateNextPeriodTime(task *t1, int n, int time);						//Update the next time remaining to start of period for each task in tasks set
 void StoreData(task* t1, int n);											//Store data for task structure
+void DisplayMetric(task* t1, int n);
 void PlotSchedule(int *t2, int n);											//Plot with the use of a pipe the schedule of the CPU
 void Plot(task *t1, int n,int lenghtOfObjects, int hyperPeriod);
 int BuildObject(taskExecution *t2, int hyperPeriod);

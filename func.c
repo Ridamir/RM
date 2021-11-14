@@ -33,7 +33,7 @@ char* colors[] = {"'dark-grey'", "'red'", "'web-green'", "'web-blue'", "'dark-ma
 
 
 /// <summary>
-/// Store tasks parameters - Task id, Computation time and Period
+/// Store tasks parameters - Task id, Computation time and Period and generate internal parameters
 /// </summary>
 /// <task data structure="t1"></param>
 /// <the lenght of the tasks set="n"></param>
@@ -69,6 +69,15 @@ void StoreTasks(task *t1, int n)
 
 		// assign the indentation of the task used for plotting its schedule
 		t1->T[indentation] = i+2;
+
+		// assign the ready time for the task to 0 since it will be released at time t=0
+		t1->T[readyTime] = 0;
+
+		// initialize the running time for the task to 0 just for init purpose
+		t1->T[runningTime] = 0;
+
+		// initialize the average response time for the task to 0 just for init purpose
+		t1->T[averageResponse] = 0;
 
 		t1++;
 		i++;
@@ -234,7 +243,11 @@ void RunPriorTask(task* t1, int time, int priorTaskID, taskExecution* t2)
 		}
 		printf("in time %d-%d, task %d is running\n", time, time + 1, priorTaskID);
 		t2->color = t1->color;
-		t2->indent = t1->T[indentation];	
+		t2->indent = t1->T[indentation];
+		if (t1->T[remainingComputation] == t1->T[computation])
+		{
+			t1->T[runningTime] = time;
+		}	
 		t1->T[remainingComputation]--;		
 	}
 	t2->idOfTask = priorTaskID;	
@@ -253,15 +266,32 @@ void UpdateNextPeriodTime(task *t1, int n, int time)
 		t1->T[nextPeriod]--;
 		if (t1->T[nextPeriod] == 0)
 		{
+			t1->T[averageResponse] += t1->T[runningTime] - t1->T[readyTime];
 			if(t1->T[remainingComputation] > 0)
 			{
-				printf("There is a deadline mise for the task %d in time t = %d\n",t1->T[id],time+1);
+				printf("There is a deadline miss for the task %d in time t = %d\n",t1->T[id],time+1);
 			}
 			t1->T[nextPeriod] = t1->T[period];
+			t1->T[readyTime] = time+1;
 			t1->T[remainingComputation] = t1->T[computation];
 		}
 		t1++;
 	}
+}
+
+
+/// <summary>
+/// Display metric of the tasks set
+/// </summary>
+/// <task data structure="t1"></param>
+/// <the lenght of the tasks set="n"></param>
+void DisplayMetric(task* t1, int n)
+{	
+	for (int i = 0; i < n; i++)
+		{
+			printf("The average response time for the task with the id %d is : %d\n", t1->T[id],t1->T[averageResponse]);
+			t1++;
+		}
 }
 
 
@@ -280,8 +310,9 @@ void StoreData(task *t1, int n)
 	}
 }
 
+
 /// <summary>
-///  Build object that will be plot using gnuplot
+///  Build object that will be plot using gnuplot and return the number of object existant
 /// </summary>
 /// <execution task data structure="t2"></param>
 /// <the hyper period of the tasks set"hyperPeriod"></param>
@@ -322,7 +353,13 @@ int BuildObject(taskExecution *t2, int hyperPeriod)
 	return numberOfObject;
 }
 
-
+/// <summary>
+///  PLot the schedule using gnuplot
+/// </summary>
+/// <task data structure="t1"></param>
+/// <lenght of the tasks set="n"></param>
+/// <number of objects existant="lenghtOfObjects"></param>
+/// <the hyper period of the tasks set"hyperPeriod"></param>
 void Plot(task *t1, int n,int lenghtOfObjects, int hyperPeriod)
 {
 	char buffer[32]= "";	
@@ -363,6 +400,9 @@ void Plot(task *t1, int n,int lenghtOfObjects, int hyperPeriod)
 	sleep(1) ;
 	gnuplot_close(h) ;
 
+}
+
+
 /*	
 	gnuplot_cmd(h, "set object 1 rectangle from 2,1 to 7, 1.7 fc rgb \'gold\'");
 	gnuplot_cmd(h, "set object 2 rectangle from 7,1 to 12,1.7 fc rgb \'light-green\'");
@@ -382,5 +422,5 @@ void Plot(task *t1, int n,int lenghtOfObjects, int hyperPeriod)
 
 */
 
-}
+
 
