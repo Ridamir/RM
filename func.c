@@ -77,7 +77,7 @@ void StoreTasks(task *t1, int n)
 		t1->T[runningTime] = 0;
 
 		// initialize the average response time for the task to 0 just for init purpose
-		t1->T[averageResponse] = 0;
+		t1->averageResponse = 0;
 
 		t1++;
 		i++;
@@ -266,7 +266,7 @@ void UpdateNextPeriodTime(task *t1, int n, int time)
 		t1->T[nextPeriod]--;
 		if (t1->T[nextPeriod] == 0)
 		{
-			t1->T[averageResponse] += t1->T[runningTime] - t1->T[readyTime];
+			t1->averageResponse += t1->T[runningTime] - t1->T[readyTime];
 			if(t1->T[remainingComputation] > 0)
 			{
 				printf("There is a deadline miss for the task %d in time t = %d\n",t1->T[id],time+1);
@@ -289,7 +289,7 @@ void DisplayMetric(task* t1, int n)
 {	
 	for (int i = 0; i < n; i++)
 		{
-			printf("The average response time for the task with the id %d is : %d\n", t1->T[id],t1->T[averageResponse]);
+			printf("The average response time for the task with the id %d is : %f\n", t1->T[id],t1->averageResponse);
 			t1++;
 		}
 }

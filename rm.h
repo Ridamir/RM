@@ -17,7 +17,6 @@
 #define indentation				5
 #define readyTime				6
 #define runningTime				7
-#define averageResponse			8
 
 //#define NUMBER_OF_STRING 		4
 //#define MAX_STRING_SIZE 		25
@@ -28,7 +27,7 @@
 //stucture of a task
 typedef struct
 {
-	int T[9];
+	int T[8];
 /*
 	External parameters		
 		
@@ -43,8 +42,8 @@ typedef struct
 		T[5] == T[indentation]						(indentation used in ploting the schedule of a task)
 		T[6] == T[readyTime]  						(for each period time, when the task is released)
 		T[7] == T[runningTime]						(for each period time, when the task is run for the first time)
-		T[8] == T[averageResponse]					(the average response for all the hyperperiod)
 */
+	double averageResponse;
 	char *color;
 
 }task;
