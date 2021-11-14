@@ -1,4 +1,3 @@
-// https://portailwifi.ec-nantes.fr/113/portal/
 /*
  * func.c
  *
@@ -372,7 +371,7 @@ void UpdateNextPeriodTime(task *t1, int n, int time)
 
 
 /// <summary>
-/// Display metric of the tasks set
+/// Calculate the average response time for each task
 /// </summary>
 /// <task data structure="t1"></param>
 /// <the lenght of the tasks set="n"></param>
@@ -510,26 +509,3 @@ void Plot(task *t1, int n,int lenghtOfObjects, int hyperPeriod)
 	gnuplot_close(h) ;
 
 }
-
-
-/*	
-	gnuplot_cmd(h, "set object 1 rectangle from 2,1 to 7, 1.7 fc rgb \'gold\'");
-	gnuplot_cmd(h, "set object 2 rectangle from 7,1 to 12,1.7 fc rgb \'light-green\'");
-	gnuplot_cmd(h, "set object 3 rectangle from 12,1 to 17,1.7 fc rgb \'light-blue\'");
-	gnuplot_cmd(h, "set object 4 rectangle from 0,0 to 9,0.7 fc rgb \'red\'");
-	gnuplot_cmd(h, "set object 5 rectangle from 10,0 to 13,0.7 fc rgb \'blue\'");
-//	gnuplot_cmd(h, "set arrow 1 from 2, 1 to 2, 1.85  fc rgb \'gold\'");
-//	gnuplot_cmd(h, "set arrow 2 from 7,1 to 7,1.85 filled fc rgb \'light-green\'");
-//	gnuplot_cmd(h, "set arrow 3 from 12,1 to 12,1.85 filled fc rgb \'light-blue\'");
-//	gnuplot_cmd(h, "set arrow 4 from 0,0 to 0,0.85 filled fc rgb \'red\'");
-//	gnuplot_cmd(h, "set arrow 5 from 10,0 to 10,0.85 filled fc rgb \'blue\'");
-	gnuplot_cmd(h, "set label 1 \'t4\' at 2,1.05");	
-	gnuplot_cmd(h, "set label 2 \'t3\' at 7,1.05");
-	gnuplot_cmd(h, "set label 3 \'t2\' at 12,1.05");
-	gnuplot_cmd(h, "set label 4 \'t5\' at 0,0.05");
-	gnuplot_cmd(h, "set label 5 \'t1\' at 10,0.05");
-
-*/
-
-
-

@@ -50,7 +50,7 @@ int main()
 	}
 	
 	t = malloc(tasksNumber * sizeof(task)) ;	
-	
+
 	SelectMode(t, tasksNumber);
 	TestSchedulability(t, tasksNumber);
 	hyperPeriod = CalculateHyperPeriod(t, tasksNumber);
@@ -69,7 +69,6 @@ int main()
 
 	CalculateAverageResponse(t, tasksNumber, hyperPeriod);
 	DisplayMetric(t,tasksNumber);
-
 
 	numOfObject = BuildObject(executionTasks, hyperPeriod);
 	Plot(t, tasksNumber, numOfObject, hyperPeriod);

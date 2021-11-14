@@ -1,0 +1,46 @@
+Script started on 2021-11-14 21:30:22+01:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="130" LINES="46"]
+Enter the lenght of the tasks set
+3
+What mode do you prefer to read data ?
+For using console to enter data, choose 1
+For reading data from file in the adequat format, choose 2
+
+Adequat file format is : 
+id_1 computation_1 period_1
+id_2 computation_2 period_2
+ .        .           .
+ .        .           .
+id_n computation_n period_n
+
+The name of the file is input.txt which is in the same directory
+
+Please care the number of your tasks must be the same as the number of the file lines
+
+What mode do you prefer please 1 or 2 ?
+2
+The tasks set is surely schedulable.
+in time 0-1, task 2 is running
+in time 1-2, task 2 is running
+in time 2-3, task 3 is running
+in time 3-4, task 3 is running
+in time 4-5, task 1 is running
+in time 5-6, task 2 is running
+in time 6-7, task 2 is running
+in time 7-8, task 1 is running
+in time 8-9, task 1 is running
+in time 9-10, the CPU is Idle
+in time 10-11, task 2 is running
+in time 11-12, task 2 is running
+in time 12-13, task 3 is running
+in time 13-14, task 3 is running
+in time 14-15, the CPU is Idle
+in time 15-16, task 2 is running
+in time 16-17, task 2 is running
+in time 17-18, the CPU is Idle
+in time 18-19, the CPU is Idle
+in time 19-20, the CPU is Idle
+The average response time for the task with the id 1 is : 4.000000
+The average response time for the task with the id 2 is : 0.000000
+The average response time for the task with the id 3 is : 2.000000
+
+Script done on 2021-11-14 21:30:29+01:00 [COMMAND_EXIT_CODE="0"]
