@@ -12,6 +12,10 @@ int main()
 {
 // --------- Declaration Area ---------
 
+	// declare the mode of data reading
+
+	int mode;
+
 	//  declare the pointer to the tasks set structure
 	task* t;
 	
@@ -34,8 +38,9 @@ int main()
 	int numOfObject;
 
 
+
 // --------- Body code ---------
-		
+
 	printf("Enter the lenght of the tasks set\n");
 	int NofScannedArguments = 0; /* Number of arguments which were successfully filled by the most recent call to scanf() */
 	NofScannedArguments = scanf("%d", &tasksNumber);
@@ -44,9 +49,9 @@ int main()
 		exit(EXIT_FAILURE); /* failure, assumptions of program are not met */
 	}
 	
-
 	t = malloc(tasksNumber * sizeof(task)) ;	
-	StoreTasks(t, tasksNumber);
+	
+	SelectMode(t, tasksNumber);
 	TestSchedulability(t, tasksNumber);
 	hyperPeriod = CalculateHyperPeriod(t, tasksNumber);
 
@@ -62,6 +67,7 @@ int main()
 		i++;
 	}
 
+	CalculateAverageResponse(t, tasksNumber, hyperPeriod);
 	DisplayMetric(t,tasksNumber);
 
 

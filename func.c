@@ -32,6 +32,94 @@ char* colors[] = {"'dark-grey'", "'red'", "'web-green'", "'web-blue'", "'dark-ma
 "gray100"};
 
 
+
+/// <summary>
+/// This function  scan the mode of data reading
+// <the lenght of the tasks set="n"></param>
+/// <returns></returns>
+void SelectMode(task *t1, int n)
+{
+	int mode;
+	printf("What mode do you prefer to read data ?\n");
+	printf("For using console to enter data, choose 1\n");
+	printf("For reading data from file in the adequat format, choose 2\n\n");
+	printf("Adequat file format is : \n");
+	printf("id_1 computation_1 period_1\n");
+	printf("id_2 computation_2 period_2\n");
+	printf(" .        .           .\n");
+	printf(" .        .           .\n");
+	printf("id_n computation_n period_n\n\n");	
+	printf("The name of the file is input.txt which is in the same directory\n\n");	
+	printf("Please care the number of your tasks must be the same as the number of the file lines\n\n");		
+
+	printf("What mode do you prefer please 1 or 2 ?\n");
+
+	scanf("%d", &mode);
+
+	switch (mode)
+	{
+		case 1:
+		StoreTasks(t1, n);
+		break;
+
+		case 2:
+		StoreTasksFile(t1, n);
+		break;
+
+		default:
+		StoreTasks(t1, n);
+	}
+}
+
+
+/// <summary>
+/// Store tasks parameters - Task id, Computation time and Period and generate internal parameters
+/// </summary>
+/// <task data structure="t1"></param>
+/// <the lenght of the tasks set="n"></param>
+/// <returns></returns>
+void StoreTasksFile(task *t1, int n)
+{
+	FILE *file;
+
+	file = fopen("input.txt", "r");
+
+	while(!feof(file))
+	{
+		int i = 0;
+		fscanf(file, "%d %d %d", &t1->T[id], &t1->T[computation], &t1->T[period]);
+
+		// init of the task remaining computation time
+		t1->T[remainingComputation] = t1->T[computation];
+		
+		// init of the task remaining time for the next period 
+		t1->T[nextPeriod] = t1->T[period];
+		
+		// assign the color of the task
+		t1->color = colors[i];
+
+		// assign the indentation of the task used for plotting its schedule
+		t1->T[indentation] = i+2;
+
+		// assign the ready time for the task to 0 since it will be released at time t=0
+		t1->T[readyTime] = 0;
+
+		// initialize the running time for the task to 0 just for init purpose
+		t1->T[runningTime] = 0;
+
+		// initialize the response time for the task to 0 just for init purpose	
+		t1->T[responseTime] = 0;	
+		
+		// initialize the average response time for the task to 0 just for init purpose
+		t1->averageResponse = 0;
+
+		t1++;
+		i++;
+
+	}
+}
+
+
 /// <summary>
 /// Store tasks parameters - Task id, Computation time and Period and generate internal parameters
 /// </summary>
@@ -76,6 +164,9 @@ void StoreTasks(task *t1, int n)
 		// initialize the running time for the task to 0 just for init purpose
 		t1->T[runningTime] = 0;
 
+		// initialize the response time for the task to 0 just for init purpose	
+		t1->T[responseTime] = 0;	
+		
 		// initialize the average response time for the task to 0 just for init purpose
 		t1->averageResponse = 0;
 
@@ -266,7 +357,7 @@ void UpdateNextPeriodTime(task *t1, int n, int time)
 		t1->T[nextPeriod]--;
 		if (t1->T[nextPeriod] == 0)
 		{
-			t1->averageResponse += t1->T[runningTime] - t1->T[readyTime];
+			t1->T[responseTime] += t1->T[runningTime] - t1->T[readyTime];
 			if(t1->T[remainingComputation] > 0)
 			{
 				printf("There is a deadline miss for the task %d in time t = %d\n",t1->T[id],time+1);
@@ -277,6 +368,24 @@ void UpdateNextPeriodTime(task *t1, int n, int time)
 		}
 		t1++;
 	}
+}
+
+
+/// <summary>
+/// Display metric of the tasks set
+/// </summary>
+/// <task data structure="t1"></param>
+/// <the lenght of the tasks set="n"></param>
+/// <the hyper period calculated for the tasks set="hyperPeriod"></param>
+void CalculateAverageResponse(task* t1, int n, int hyperPeriod)
+{
+	for (int i = 0; i < n; i++)
+		{
+			int jobInHyperperiod = 0;
+			jobInHyperperiod = hyperPeriod/t1->T[period];
+			t1->averageResponse = t1->T[responseTime]/jobInHyperperiod;
+			t1++;
+		}
 }
 
 
